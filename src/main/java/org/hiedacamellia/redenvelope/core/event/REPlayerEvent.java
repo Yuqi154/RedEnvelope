@@ -9,6 +9,7 @@ import net.neoforged.neoforge.event.ServerChatEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.hiedacamellia.redenvelope.core.config.ServerConfig;
 import org.hiedacamellia.redenvelope.core.network.RedEnvelopePacket;
 import org.hiedacamellia.redenvelope.core.network.RedEnvelopeStorage;
 import org.hiedacamellia.redenvelope.core.util.REUtil;
@@ -48,7 +49,7 @@ public class REPlayerEvent {
             if(gameTime % 100 ==0){
                 var map = serverPlayer.getData(REAttachment.HONGBAO_STORAGE).copy();
                 map.values().forEach(hongBaoPacket -> {
-                    if(hongBaoPacket.extraData().getLong("time") + 10 < System.currentTimeMillis()/1000){
+                    if(hongBaoPacket.extraData().getLong("time") + ServerConfig.TTL.get() < System.currentTimeMillis()/1000){
                         REUtil.withdraw(serverPlayer.server,hongBaoPacket,1);
                     }
                 });

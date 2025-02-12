@@ -63,6 +63,8 @@ public class CommandExecutes {
         ItemStack copy = mainHandItem.copy();
         if(itemcount != -1)
             copy.setCount(itemcount);
+        else
+            itemcount = copy.getCount();
 
         RedEnvelopePacket spell = REUtil.create(player, copy, "spell", count);
         spell.extraData().putString("spell",StringArgumentType.getString(context, "words"));
